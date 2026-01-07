@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct iSushiApp: App {
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MenuContainerView(menuVM: MenuViewModel(useCase: FetchMenuUseCase(repository: DataService())))
         }
     }
 }
