@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DishDetailView: View {
     let dish: Dish
-    @EnvironmentObject var cartVM: CartSheetViewModel
+    @ObservedObject var cartVM: CartSheetViewModel
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {

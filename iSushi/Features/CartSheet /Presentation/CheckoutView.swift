@@ -14,15 +14,18 @@ struct CheckoutView: View{
     
     var body: some View{
         NavigationStack{
-            VStack{
+            ZStack{
                 if viewModel.showSuccessView{
-                    SuccessViewComponent(viewModel: viewModel)
+                    SuccessViewComponent(){
+                        viewModel.showSuccessView = false
+                        dismiss()
+                    }
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
                 } else{
                     OrderSummaryComponent(viewModel: viewModel)
+                        .transition(.move(edge: .leading).combined(with: .opacity))
                 }
             }
-            .navigationTitle("Checkout")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar{
                 if !viewModel.showSuccessView{
                     ToolbarItem(placement: .cancellationAction){

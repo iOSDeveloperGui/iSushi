@@ -6,16 +6,21 @@
 //
 
 import Foundation
-import Combine
+import SwiftUI
 
-class AppState: ObservableObject{
-    @Published private var screen: Screens = .welcome
-    private var isLoading: Bool = false
+/*
+struct AppRouterContainer: View{
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
+    @State private var flowState: Screens = .welcome
     
-    func showMenu(){
-        isLoading = true
-        
-        self.screen = .menu
-        isLoading = false 
+    var body: some View{
+        switch flowState {
+        case .welcome:
+            WelcomeView()
+        case .mainApp:
+            MenuContainerView(menuVM: MenuViewModel(useCase: ), cartVM: <#T##CartSheetViewModel#>)
+        }
     }
+    
 }
+*/

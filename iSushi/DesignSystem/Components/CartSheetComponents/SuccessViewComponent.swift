@@ -8,30 +8,28 @@
 import SwiftUI
 
 struct SuccessViewComponent: View {
-    @ObservedObject var viewModel: CartSheetViewModel
-    @Environment(\.dismiss) private var dismiss
+    var onDone: () -> Void
     
     var body: some View {
-        VStack(spacing: 20){
+        VStack(spacing: 24){
             Image(systemName: "checkmark.seal.fill")
                 .font(.system(size: 80))
                 .foregroundColor(.green)
+                .symbolEffect(.bounce, options: .repeat(2))
             
             Text("Order Received!")
                 .font(.title.bold())
             
             Text("Your sushi is being prepared by our chefs.")
-                .multilineTextAlignment(.center)
                 .foregroundColor(.secondary)
             
             Button("Done") {
-                viewModel.showSuccessView = false
-                dismiss()
+                onDone()
             }
             .buttonStyle(.borderedProminent)
-            .padding(.top)
+            .tint(.green)
         }
-        .transition(.scale.combined(with: .opacity))
+        .padding([.vertical, .horizontal], 16)
     }
 }
 

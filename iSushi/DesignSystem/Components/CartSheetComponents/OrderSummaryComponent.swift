@@ -57,10 +57,12 @@ struct OrderSummaryComponent: View {
                         .bold()
                 }
             })
-            .buttonStyle(.glass)
+            .buttonStyle(.borderedProminent)
             .tint(.buttonGreen1)
             .padding([.vertical, .horizontal], 32)
         }
+        .navigationTitle("Checkout")
+        .navigationBarTitleDisplayMode(.inline)
         
     }
 }

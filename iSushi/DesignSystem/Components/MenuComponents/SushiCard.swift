@@ -10,7 +10,8 @@ import SwiftUI
 
 struct SushiCard: View{
     let dish: Dish
-    @ObservedObject var viewModel: MenuViewModel
+    let isSelected: Bool
+    let onDetailsTap: () -> Void
     
     var body: some View{
         VStack(spacing: 0){
@@ -19,14 +20,14 @@ struct SushiCard: View{
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             } placeholder: {
-                Color.gray.opacity(0.4)
+                ProgressView()
             }
-            .frame(height: 140)
+            .frame(height: 160)
             .clipped()
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .padding([.top, .horizontal ], 12)
             
-            VStack(spacing: 16){
+            VStack(spacing: 12){
                 Text(dish.name)
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .lineLimit(1)
@@ -39,11 +40,8 @@ struct SushiCard: View{
             }
             .padding([.horizontal, .vertical ], 16)
             
-            Spacer(minLength: 0)
-            
             Button(action: {
-                viewModel.selectedDish = dish
-                viewModel.showDetailSheet = true
+                onDetailsTap()
             }, label: {
                 Text("See details")
                     .font(.system(size: 16, weight: .bold))
@@ -57,11 +55,15 @@ struct SushiCard: View{
             })
             .padding([.horizontal, .bottom], 12)
         }
+        .onTapGesture { onDetailsTap() }
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(.gray.opacity(0.2))
+                .fill(Color.gray.opacity(0.2))
         )
-        .frame(height: 400)
-        .shadow(color: .gray.opacity(0.2), radius: 2)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.buttonSushi, lineWidth: isSelected ? 3 : 0)
+        )
+        
     }
 }

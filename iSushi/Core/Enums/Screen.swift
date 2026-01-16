@@ -7,6 +7,5 @@
 
 enum Screens{
     case welcome
-    case home
-    case menu
+    case mainApp
 }

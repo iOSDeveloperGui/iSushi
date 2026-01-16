@@ -13,7 +13,8 @@ struct MenuContainerView: View {
     
     var body: some View {
         NavigationSplitView{
-            List(selection: $menuVM.selectedCategory){       Text("All Items")
+            List(selection: $menuVM.selectedCategory){
+                Text("All Items")
                     .tag(String?.none)
                     .bold()
                 
@@ -25,15 +26,26 @@ struct MenuContainerView: View {
             .navigationTitle("Categories")
             
         } content: {
-            DishContentView(dishes: menuVM.filteredDishes, viewModel: menuVM, selectedDish: $menuVM.selectedDish)
-                .environmentObject(cartVM)
-                .task{
-                    await menuVM.loadMenu()
-                }
+            DishContentView(dishes: menuVM.filteredDishes, selectedDish: menuVM.selectedDish){ dish in
+                menuVM.selectedDish = dish
+                menuVM.showDetailSheet = true
+            }
+            .environmentObject(cartVM)
+            .task{
+                await menuVM.loadMenu()
+            }
+            
         } detail: {
             CartSidePanelView(viewModel: cartVM)
         }
         .navigationSplitViewStyle(.balanced)
+        .sheet(isPresented: $menuVM.showDetailSheet, onDismiss: {
+            menuVM.selectedDish = nil
+        }){
+            if let dish = menuVM.selectedDish{
+                DishDetailView(dish: dish, cartVM: cartVM)
+            }
+        }
     }
 }
 

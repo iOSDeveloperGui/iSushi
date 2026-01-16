@@ -14,8 +14,8 @@ class MenuViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var selectedCategory: String? = nil
     @Published var selectedDish: Dish?
-    @Published var errorMessage: String? = nil
     @Published var showDetailSheet = false
+    @Published var errorMessage: String? = nil
     
     private let fetchMenuUseCase: FetchMenuUseCaseProtocol
     
@@ -49,5 +49,10 @@ class MenuViewModel: ObservableObject {
             print("Error fetching menu: \(error)")
         }
         isLoading = false
+    }
+    
+    func selectDish(_ dish: Dish){
+        self.selectedDish = dish
+        self.showDetailSheet = true
     }
 }

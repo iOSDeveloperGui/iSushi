@@ -40,15 +40,18 @@ class CartSheetViewModel: ObservableObject{
     
     func checkout() async{
         isProcessing = true
+        
         do{
-            let success = try await checkoutUseCase.execute(items: items)
-            
-            if success{
-                items.removeAll()
-            }
+            try await Task.sleep(nanoseconds: 2 * 1_000_000_000)
         } catch{
-            print("Checkout failed")
+            print("Error: \(error.localizedDescription)")
         }
+        
         isProcessing = false
+        
+        withAnimation(.spring()) {
+            self.showSuccessView = true
+        }
+        items = []
     }
 }
